@@ -11,10 +11,32 @@ public class Movie {
     public static final int NEW_RELEASE = 1;
 
     private String title;
-    private int priceCode;
+    private Price price;
 
     public Movie(String title, int priceCode) {
         this.title = title;
-        this.priceCode = priceCode;
+        setPriceCode(priceCode);
+    }
+
+    public void setPriceCode(int arg) {
+        switch (arg) {
+            case REGULAR -> price = new RegularPrice();
+            case CHILDREN -> price = new ChildrenPrice();
+            case NEW_RELEASE -> price = new NewReleasePrice();
+            default -> throw new IllegalArgumentException("Incorrect Price Code");
+        }
+    }
+
+    public int getPriceCode() {
+        return price.getPriceCode();
+    }
+
+    public double getCharge(int daysRented) {
+        return price.getCharge(daysRented);
+    }
+
+
+    public int getFrequentRenterPoints(int daysRented) {
+        return price.getFrequentRenterPoints(daysRented);
     }
 }
